@@ -1,3 +1,11 @@
+---
+title:  RocketMQ系列02--集群构建模型
+date:  2018-08-27 
+categories:  RocketMQ 
+tags: rocketmq ; 集群 
+---
+
+
 # 0.前言
 
 
@@ -47,7 +55,7 @@
 
 　　一个master与多个slave通过指定相同的brokerName被归为一个 broker set（broker集群）。通常生产环境中，我们至少需要2个broker Set。Broker Replication指的就是slave 获取或者复制master的数据。
 	
-	1.sync Broker: 生产者发送的每一条消息都至少同步复制到一个slave后才返回告诉生产者成功，即“同步双写”；
+	1.sync Broker: 生产者发送的每一条消息都至少同步复制到一个slave后才返回告诉生产者成功，即"同步双写"；
 	2.Async Broker: 生产者发送的每一条消息只要写入master就返回告诉生产者成功，然后再"异步复制"到slave.
 	
 # 3.多 Master 多 Slave 模式，异步复制

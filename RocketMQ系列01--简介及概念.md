@@ -1,3 +1,11 @@
+---
+title:  RocketMQ系列01--简介及概念
+date:  2018-08-27 
+categories:  RocketMQ 
+tags: rocketmq ; 概念
+---
+
+
 # 1.RocketMQ是什么？
 
 ![](http://img3.tbcdn.cn/5476e8b07b923/TB1rdyvPXXXXXcBapXXXXXXXXXX)

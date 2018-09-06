@@ -24,9 +24,11 @@ Pull方式: 由消费者客户端主动向消息中间件（MQ消息服务器代
 
 答案就是在rocketmq中有一种长轮询机制（对普通轮询的一种优化），来平衡上面push/pull模型的各自缺点。基本设计思路：
 
-消费者端如果第一次尝试pull消息失败（比如：broker端没有消息可以被消费），这是并不立即给消费者端返回response的响应，而是先hold住并挂起该请求（将该请求保存至pullRequestTable本地缓存变量中），然后broker端的后台独立线程（PullRequestHoldService）会从pullRequestTable本地缓存变量中不断去取信息。	
+消费者端如果第一次尝试pull消息失败（比如：broker端没有消息可以被消费），这时并不立即给消费者端返回response的响应，而是先hold住并挂起该请求（将该请求保存至pullRequestTable本地缓存变量中），然后broker端的后台独立线程（PullRequestHoldService）会从pullRequestTable本地缓存变量中不断去取信息（查询待拉取消息的偏移量是否小于消费队列的最大偏移量，如果条件成立则说明有新消息到达broker端）。同时,另外一个ReputMessageService线程不断的构建ConsumerQueue/IndexFile数据，并取出hold住的pull请求进行二次处理。如果有新消息到达broker端，则通过重新调用一次业务处理器-pullmessageProcessor的处理请求方法-processRequest来重新尝试拉取消息。
 
 # 2.demo代码 #
+
+
 
 
 # 3.RocketMQ消息消费的长轮询机制 #
